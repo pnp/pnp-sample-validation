@@ -65,12 +65,14 @@ export async function run() {
         })
         .join("\n");
 
-      octokit.rest.issues.createComment({
-        issue_number: pullRequest!.number,
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        body: `### Validation failed!\n${body}`,
-      });
+      console.log(body);
+
+      // octokit.rest.issues.createComment({
+      //   issue_number: pullRequest!.number,
+      //   owner: context.repo.owner,
+      //   repo: context.repo.repo,
+      //   body: `### Validation failed!\n${body}`,
+      // });
 
       setFailed("Invalid samples!");
     }
