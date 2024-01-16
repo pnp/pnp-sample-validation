@@ -1,0 +1,24 @@
+{
+  "name": "validate-sample-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && ncc build lib/index.js",
+    "dev": "npm run build && act",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Paolo Pialorsi",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@actions/http-client": "^2.2.0",
+    "@vercel/ncc": "^0.36.1",
+    "buffer": "^6.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  }
+}

@@ -1,0 +1,14 @@
+name: Run my action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    name: Checks if this action works
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          gh-token: ${{ secrets.GITHUB_TOKEN }}

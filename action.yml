@@ -1,0 +1,12 @@
+name: "Validate"
+description: "Validates the pull request."
+author: "Paolo Pialorsi"
+
+inputs:
+  gh-token:
+    description: "The GitHub token for authentication."
+    required: true
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
