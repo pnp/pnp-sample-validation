@@ -40,7 +40,7 @@ export async function run() {
       ).toString();
 
       const res = await http.post(
-        "https://m365-galleries-test.azurewebsites.net/Samples/validateSample",
+        "https://m365-galleries.azurewebsites.net/Samples/validateSample",
         fileContent,
         {
           "Content-Type": "application/json",
