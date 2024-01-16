@@ -33539,16 +33539,13 @@ async function run() {
             owner: github_1.context.repo.owner,
             repo: github_1.context.repo.repo,
             pull_number: pullRequest.number,
-            // owner: "kasuken",
-            // repo: "TestCustomActionUrl",
-            // pull_number: 5,
         })
             .then((files) => files.data.filter((file) => file.filename.endsWith("samples.json")));
         const errors = [];
         const filePromises = files.map(async (file) => {
             const fileData = await octokit.request(file.contents_url);
             const fileContent = buffer_1.Buffer.from(fileData.data.content, "base64").toString();
-            const res = await http.post("https://m365-galleries-test.azurewebsites.net/Samples/validateSample", fileContent, {
+            const res = await http.post("https://m365-galleries.azurewebsites.net/Samples/validateSample", fileContent, {
                 "Content-Type": "application/json",
             });
             const body = JSON.parse(await res.readBody());
