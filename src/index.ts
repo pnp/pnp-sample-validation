@@ -66,7 +66,7 @@ export async function run() {
         .join("\n");
 
       octokit.rest.issues.createComment({
-        issue_number: context.issue.number,
+        issue_number: pullRequest!.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
         body: `### Validation failed!\n${body}`,

@@ -33563,7 +33563,7 @@ async function run() {
             })
                 .join("\n");
             octokit.rest.issues.createComment({
-                issue_number: github_1.context.issue.number,
+                issue_number: pullRequest.number,
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,
                 body: `### Validation failed!\n${body}`,
