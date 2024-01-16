@@ -33540,7 +33540,7 @@ async function run() {
             repo: github_1.context.repo.repo,
             pull_number: pullRequest.number,
         })
-            .then((files) => files.data.filter((file) => file.filename.endsWith("samples.json")));
+            .then((files) => files.data.filter((file) => file.filename.endsWith("sample.json")));
         const errors = [];
         const filePromises = files.map(async (file) => {
             const fileData = await octokit.request(file.contents_url);

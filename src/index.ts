@@ -24,7 +24,7 @@ export async function run() {
         pull_number: pullRequest!.number,
       })
       .then((files) =>
-        files.data.filter((file) => file.filename.endsWith("samples.json"))
+        files.data.filter((file) => file.filename.endsWith("sample.json"))
       );
 
     const errors = [] as {
