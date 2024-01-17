@@ -67,12 +67,12 @@ export async function run() {
 
       console.log(body);
 
-      // octokit.rest.issues.createComment({
-      //   issue_number: pullRequest!.number,
-      //   owner: context.repo.owner,
-      //   repo: context.repo.repo,
-      //   body: `### Validation failed!\n${body}`,
-      // });
+      octokit.rest.issues.createComment({
+        issue_number: pullRequest!.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: `### Validation failed!\n${body}`,
+      });
 
       setFailed("Invalid samples!");
     }

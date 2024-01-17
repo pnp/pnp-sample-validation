@@ -33563,12 +33563,12 @@ async function run() {
             })
                 .join("\n");
             console.log(body);
-            // octokit.rest.issues.createComment({
-            //   issue_number: pullRequest!.number,
-            //   owner: context.repo.owner,
-            //   repo: context.repo.repo,
-            //   body: `### Validation failed!\n${body}`,
-            // });
+            octokit.rest.issues.createComment({
+                issue_number: pullRequest.number,
+                owner: github_1.context.repo.owner,
+                repo: github_1.context.repo.repo,
+                body: `### Validation failed!\n${body}`,
+            });
             (0, core_1.setFailed)("Invalid samples!");
         }
     }
