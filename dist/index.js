@@ -33534,9 +33534,6 @@ async function run() {
     const octokit = (0, github_1.getOctokit)(token);
     const pullRequest = github_1.context.payload.pull_request;
     try {
-        // Extract source and destination organizations
-        const sourceOrg = pullRequest.head.repo.owner.login;
-        const baseOrg = pullRequest.base.repo.owner.login;
         // Extract source and destination repositories
         const sourceRepo = pullRequest.head.repo.full_name;
         const baseRepo = pullRequest.base.repo.full_name;
@@ -33547,11 +33544,10 @@ async function run() {
             repo: github_1.context.repo.repo,
             pull_number: pullRequest.number,
         })
-            .then((files) => files.data.map((file) => { file.filename, file.blob_url, file.contents_url, file.raw_url; }));
+            .then((files) => files //.data.map((file) => { file.filename, file.blob_url, file.contents_url, file.raw_url })
+        );
         // Show all the variables for debugging purposes
-        console.log(sourceOrg);
         console.log(sourceRepo);
-        console.log(baseOrg);
         console.log(baseRepo);
         console.log(allFiles);
         // Extract the files that end with sample.json
