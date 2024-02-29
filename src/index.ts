@@ -32,11 +32,6 @@ export async function run() {
         files.data.map((file) => file.blob_url )
       );
 
-    // Show all the variables for debugging purposes
-    console.log(sourceRepo);
-    console.log(baseRepo);
-    console.log(allFiles);
-
     // Extract the files that end with sample.json
     const files = await octokit.rest.pulls
       .listFiles({
@@ -61,7 +56,7 @@ export async function run() {
       ).toString();
 
       const res = await http.post(
-        "https://m365-galleries-dev.azurewebsites.net/Samples/validateSampleForGitHub",
+        "https://m365-galleries.azurewebsites.net/Samples/validateSampleForGitHub",
         JSON.stringify({
           baseRepo,
           itemsUrls: allFiles,
