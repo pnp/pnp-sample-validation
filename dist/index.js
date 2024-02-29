@@ -33544,8 +33544,7 @@ async function run() {
             repo: github_1.context.repo.repo,
             pull_number: pullRequest.number,
         })
-            .then((files) => files //.data.map((file) => { file.filename, file.blob_url, file.contents_url, file.raw_url })
-        );
+            .then((files) => files.data.map((file) => { file.blob_url; }));
         // Show all the variables for debugging purposes
         console.log(sourceRepo);
         console.log(baseRepo);
@@ -33562,7 +33561,11 @@ async function run() {
         const filePromises = files.map(async (file) => {
             const fileData = await octokit.request(file.contents_url);
             const fileContent = buffer_1.Buffer.from(fileData.data.content, "base64").toString();
-            const res = await http.post("https://m365-galleries.azurewebsites.net/Samples/validateSample", fileContent, {
+            const res = await http.post("https://m365-galleries-dev.azurewebsites.net/Samples/validateSampleForGitHub", JSON.stringify({
+                baseRepo,
+                itemsUrls: allFiles,
+                sampleJsonFileContent: fileContent,
+            }), {
                 "Content-Type": "application/json",
             });
             const body = JSON.parse(await res.readBody());
