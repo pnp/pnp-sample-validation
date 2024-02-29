@@ -17,6 +17,33 @@ export async function run() {
   const pullRequest = context.payload.pull_request;
 
   try {
+    // Extract source and destination organizations
+    const sourceOrg = pullRequest!.head.repo.owner.login;
+    const baseOrg = pullRequest!.base.repo.owner.login;
+
+    // Extract source and destination repositories
+    const sourceRepo = pullRequest!.head.repo.full_name;
+    const baseRepo = pullRequest!.base.repo.full_name;
+
+    // Extract all files from the pull request
+    const allFiles = await octokit.rest.pulls
+      .listFiles({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        pull_number: pullRequest!.number,
+      })
+      .then((files) =>
+        files.data.map((file) => { file.filename, file.blob_url, file.contents_url, file.raw_url })
+      );
+
+    // Show all the variables for debugging purposes
+    console.log(sourceOrg);
+    console.log(sourceRepo);
+    console.log(baseOrg);
+    console.log(baseRepo);
+    console.log(allFiles);
+
+    // Extract the files that end with sample.json
     const files = await octokit.rest.pulls
       .listFiles({
         owner: context.repo.owner,
