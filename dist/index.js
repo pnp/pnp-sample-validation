@@ -33534,6 +33534,18 @@ async function run() {
     const octokit = (0, github_1.getOctokit)(token);
     const pullRequest = github_1.context.payload.pull_request;
     try {
+        // Extract source and destination repositories
+        const sourceRepo = pullRequest.head.repo.full_name;
+        const baseRepo = pullRequest.base.repo.full_name;
+        // Extract all files from the pull request
+        const allFiles = await octokit.rest.pulls
+            .listFiles({
+            owner: github_1.context.repo.owner,
+            repo: github_1.context.repo.repo,
+            pull_number: pullRequest.number,
+        })
+            .then((files) => files.data.map((file) => file.blob_url));
+        // Extract the files that end with sample.json
         const files = await octokit.rest.pulls
             .listFiles({
             owner: github_1.context.repo.owner,
@@ -33545,7 +33557,11 @@ async function run() {
         const filePromises = files.map(async (file) => {
             const fileData = await octokit.request(file.contents_url);
             const fileContent = buffer_1.Buffer.from(fileData.data.content, "base64").toString();
-            const res = await http.post("https://m365-galleries.azurewebsites.net/Samples/validateSample", fileContent, {
+            const res = await http.post("https://m365-galleries.azurewebsites.net/Samples/validateSampleForGitHub", JSON.stringify({
+                baseRepo,
+                itemsUrls: allFiles,
+                sampleJsonFileContent: fileContent,
+            }), {
                 "Content-Type": "application/json",
             });
             const body = JSON.parse(await res.readBody());
@@ -33564,7 +33580,7 @@ async function run() {
                 .join("\n");
             try {
                 octokit.rest.issues.createComment({
-                    issue_number: pullRequest.number,
+                    issue_number: github_1.context.issue.number,
                     owner: github_1.context.repo.owner,
                     repo: github_1.context.repo.repo,
                     body: `### Validation failed!\n${body}`,
