@@ -33534,6 +33534,27 @@ async function run() {
     const octokit = (0, github_1.getOctokit)(token);
     const pullRequest = github_1.context.payload.pull_request;
     try {
+        // Extract source and destination organizations
+        const sourceOrg = pullRequest.head.repo.owner.login;
+        const baseOrg = pullRequest.base.repo.owner.login;
+        // Extract source and destination repositories
+        const sourceRepo = pullRequest.head.repo.full_name;
+        const baseRepo = pullRequest.base.repo.full_name;
+        // Extract all files from the pull request
+        const allFiles = await octokit.rest.pulls
+            .listFiles({
+            owner: github_1.context.repo.owner,
+            repo: github_1.context.repo.repo,
+            pull_number: pullRequest.number,
+        })
+            .then((files) => files.data.map((file) => { file.filename, file.blob_url, file.contents_url, file.raw_url; }));
+        // Show all the variables for debugging purposes
+        console.log(sourceOrg);
+        console.log(sourceRepo);
+        console.log(baseOrg);
+        console.log(baseRepo);
+        console.log(allFiles);
+        // Extract the files that end with sample.json
         const files = await octokit.rest.pulls
             .listFiles({
             owner: github_1.context.repo.owner,
@@ -33564,7 +33585,7 @@ async function run() {
                 .join("\n");
             try {
                 octokit.rest.issues.createComment({
-                    issue_number: pullRequest.number,
+                    issue_number: github_1.context.issue.number,
                     owner: github_1.context.repo.owner,
                     repo: github_1.context.repo.repo,
                     body: `### Validation failed!\n${body}`,
