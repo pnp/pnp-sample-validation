@@ -29,7 +29,7 @@ export async function run() {
         pull_number: pullRequest!.number,
       })
       .then((files) =>
-        files.data.map((file) => { file.blob_url })
+        files.data.map((file) => file.blob_url )
       );
 
     // Show all the variables for debugging purposes

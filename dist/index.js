@@ -33544,7 +33544,7 @@ async function run() {
             repo: github_1.context.repo.repo,
             pull_number: pullRequest.number,
         })
-            .then((files) => files.data.map((file) => { file.blob_url; }));
+            .then((files) => files.data.map((file) => file.blob_url));
         // Show all the variables for debugging purposes
         console.log(sourceRepo);
         console.log(baseRepo);
