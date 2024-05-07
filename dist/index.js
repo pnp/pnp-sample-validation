@@ -33545,6 +33545,10 @@ async function run() {
             pull_number: pullRequest.number,
         })
             .then((files) => files.data.map((file) => file.blob_url));
+        console.log("Files included in this PR:");
+        for (const f of allFiles) {
+            console.log(f); // Log the file path
+        }
         // Extract the files that end with sample.json
         const files = await octokit.rest.pulls
             .listFiles({
@@ -33553,6 +33557,10 @@ async function run() {
             pull_number: pullRequest.number,
         })
             .then((files) => files.data.filter((file) => file.filename.endsWith("sample.json")));
+        console.log("Sample files included in this PR:");
+        for (const f of files) {
+            console.log(f); // Log the file path
+        }
         const errors = [];
         const filePromises = files.map(async (file) => {
             const fileData = await octokit.request(file.contents_url);
