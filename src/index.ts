@@ -91,13 +91,13 @@ export async function run() {
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
-          body: `### Validation failed!\n${body}`,
+          body: `### PnP sample manifest validation failed!\n${body}`,
         });
       } catch (error) {
         console.log(body);
       }
 
-      setFailed("Invalid samples!");
+      setFailed("Invalid sample!");
     }
   } catch (error) {
     console.log(error);
